@@ -1,0 +1,8 @@
+kind: pipeline
+name: default
+
+steps:
+- name: helloworld-test
+  image: alpine
+  commands:
+  - env
