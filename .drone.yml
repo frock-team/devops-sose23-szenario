@@ -11,13 +11,13 @@ services:
 
 steps:
   - name: install
-    image: node:14
+    image: node:16
     commands:
       - yarn install
       - yarn turbo run bootstrap
 
   - name: build-frontend
-    image: node:14
+    image: node:16
     commands:
       - yarn turbo run build --scope=frontend
     when:
@@ -25,7 +25,7 @@ steps:
         includes: [apps/frontend/**]
 
   - name: build-backend
-    image: node:14
+    image: node:16
     commands:
       - yarn turbo run build --scope=backend
     when:
@@ -33,7 +33,7 @@ steps:
         includes: [apps/backend/**]
 
   - name: test-frontend
-    image: node:14
+    image: node:16
     commands:
       - yarn turbo run test --scope=frontend
     when:
@@ -41,7 +41,7 @@ steps:
         includes: [apps/frontend/**]
 
   - name: test-backend
-    image: node:14
+    image: node:16
     commands:
       - yarn turbo run test --scope=backend
     when:
