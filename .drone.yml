@@ -48,17 +48,21 @@ steps:
         includes: [apps/backend/**]
 
   - name: owasp-frontend
-    image: owasp/zap2docker-stable
+    image: node:16
     commands:
-      - yarn turbo run owasp --scope=frontend
+      - cd apps/frontend
+      - yarn install --frozen-lockfile
+      - yarn run owasp
     when:
       changeset:
         includes: [apps/frontend/**]
 
   - name: owasp-backend
-    image: owasp/zap2docker-stable
+    image: node:16
     commands:
-      - yarn turbo run owasp --scope=backend
+      - cd apps/backend
+      - yarn install --frozen-lockfile
+      - yarn run owasp
     when:
       changeset:
         includes: [apps/backend/**]
