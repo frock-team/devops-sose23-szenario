@@ -1,8 +1,65 @@
 kind: pipeline
+type: docker
 name: default
 
+clone:
+  depth: 50
+  
+services:
+  - name: docker
+    image: docker:dind
+
 steps:
-- name: helloworld-test
-  image: alpine
-  commands:
-  - env
+  - name: install
+    image: node:14
+    commands:
+      - yarn install
+      - yarn turbo run bootstrap
+
+  - name: build-frontend
+    image: node:14
+    commands:
+      - yarn turbo run build --scope=frontend
+    when:
+      changeset:
+        includes: [apps/frontend/**]
+
+  - name: build-backend
+    image: node:14
+    commands:
+      - yarn turbo run build --scope=backend
+    when:
+      changeset:
+        includes: [apps/backend/**]
+
+  - name: test-frontend
+    image: node:14
+    commands:
+      - yarn turbo run test --scope=frontend
+    when:
+      changeset:
+        includes: [apps/frontend/**]
+
+  - name: test-backend
+    image: node:14
+    commands:
+      - yarn turbo run test --scope=backend
+    when:
+      changeset:
+        includes: [apps/backend/**]
+
+  - name: owasp-frontend
+    image: owasp/zap2docker-stable
+    commands:
+      - yarn turbo run owasp --scope=frontend
+    when:
+      changeset:
+        includes: [apps/frontend/**]
+
+  - name: owasp-backend
+    image: owasp/zap2docker-stable
+    commands:
+      - yarn turbo run owasp --scope=backend
+    when:
+      changeset:
+        includes: [apps/backend/**]

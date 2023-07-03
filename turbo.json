@@ -1,0 +1,21 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["build/**"]
+    },
+    "deploy": {
+      "dependsOn": ["build", "test", "owasp"]
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "inputs": ["src/**/*.js", "src/**/*.js", "test/**/*.js", "test/**/*.js"]
+    },
+    "owasp": {},
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

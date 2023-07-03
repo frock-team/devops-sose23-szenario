@@ -1,0 +1,17 @@
+{
+  "name": "devops-sose23-szenario",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:frock-team/devops-sose23-szenario.git",
+  "author": "knht <43456808+knht@users.noreply.github.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "config/*",
+    "apps/*"
+  ],
+  "devDependencies": {
+    "turbo": "^1.10.7"
+  }
+}
